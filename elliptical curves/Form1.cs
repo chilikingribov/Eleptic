@@ -42,13 +42,13 @@ namespace elliptical_curves
         private bool utensilsLineCurve(double a, double b, int p, double x, double y)
         {
             double l, pr;
-            l = x * x * x - a * x + b; // просто посчитали без модуля
+            l = x * x * x + a * x + b; // просто посчитали без модуля
             pr = y * y;
             l=PoModul(l, p); // посчитали по модулю
             pr = PoModul(pr, p);
 
 
-            if (p == l) // сравнили уже по вычисленному модулю
+            if (pr == l) // сравнили уже по вычисленному модулю
             {
                 return true;
             }
