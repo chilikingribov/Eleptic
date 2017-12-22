@@ -1,0 +1,10 @@
+C:\Users\Mitya\source\repos\elliptical curves\elliptical curves\bin\Debug\elliptical curves.exe.config
+C:\Users\Mitya\source\repos\elliptical curves\elliptical curves\bin\Debug\elliptical curves.exe
+C:\Users\Mitya\source\repos\elliptical curves\elliptical curves\bin\Debug\elliptical curves.pdb
+C:\Users\Mitya\source\repos\elliptical curves\elliptical curves\obj\Debug\elliptical curves.csprojResolveAssemblyReference.cache
+C:\Users\Mitya\source\repos\elliptical curves\elliptical curves\obj\Debug\elliptical_curves.Form1.resources
+C:\Users\Mitya\source\repos\elliptical curves\elliptical curves\obj\Debug\elliptical_curves.Properties.Resources.resources
+C:\Users\Mitya\source\repos\elliptical curves\elliptical curves\obj\Debug\elliptical curves.csproj.GenerateResource.Cache
+C:\Users\Mitya\source\repos\elliptical curves\elliptical curves\obj\Debug\elliptical curves.csproj.CoreCompileInputs.cache
+C:\Users\Mitya\source\repos\elliptical curves\elliptical curves\obj\Debug\elliptical curves.exe
+C:\Users\Mitya\source\repos\elliptical curves\elliptical curves\obj\Debug\elliptical curves.pdb
