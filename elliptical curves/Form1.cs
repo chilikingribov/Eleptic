@@ -29,7 +29,21 @@ namespace elliptical_curves
             y2= Convert.ToDouble(textBox6.Text);
 
 
-            if (utensilsLineCurve(a, b, p, x1, y1) && utensilsLineCurve(a, b, p, x2, y2))
+            if (p > 3)
+            {
+                Number7(a, b, p, x1, y1, x2, y2);
+            }
+            if (p == 2)
+            {
+
+            }
+
+          
+        }
+
+        private void Number7(double a, double b, int p, double x1, double y1, double x2, double y2)
+        {
+            if (utensilsLineCurve7(a, b, p, x1, y1) && utensilsLineCurve7(a, b, p, x2, y2))
             {
                 SumPoint(a, b, p, x1, y1, x2, y2);
             }
@@ -39,7 +53,7 @@ namespace elliptical_curves
             }
         }
 
-        private bool utensilsLineCurve(double a, double b, int p, double x, double y)
+        private bool utensilsLineCurve7(double a, double b, int p, double x, double y)
         {
             double l, pr;
             l = x * x * x + a * x + b; // просто посчитали без модуля
@@ -62,6 +76,7 @@ namespace elliptical_curves
             {
                 while (ch >= 0)
                 {
+                    if (ch == 0) return ch;
                     ch -= p;
                 }
                 ch += p; // т.к смотрим по положительным
@@ -70,10 +85,11 @@ namespace elliptical_curves
             {
                 while (ch <= 0)
                 {
+                    if (ch == 0) return ch;
                     ch += p;
                     
                 }
-                ch -= p; // т.к если попадаем в 0 число, то делается еще 1 операция , например -5 по модулю 5
+                
             }
             return ch;
         }
@@ -136,14 +152,16 @@ namespace elliptical_curves
 
         }
 
-        private double ObratniiElement(double ch, int p)
+        private double ObratniiElement(double ch, int p) 
         {
             double obratn; // братный элемент
+
             // спросить, включаем мы тут p или нет 
             for (int i = 1; i <= p; i++)
             {
-                obratn = PoModul(ch, p);
-                if (obratn == 1) return i;
+                obratn = PoModul(ch, p)*i; 
+                
+                if (PoModul(obratn, p) == 1) return i;
             }
             return -1;
         }
