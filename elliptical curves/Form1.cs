@@ -58,16 +58,27 @@ namespace elliptical_curves
 
         private double PoModul(double ch, int p)
         {
-
-            while (ch >= 0)
+            if (ch >= 0)
             {
-                ch -= p;
+                while (ch >= 0)
+                {
+                    ch -= p;
+                }
+                ch += p; // т.к смотрим по положительным
             }
-            ch += p; // т.к смотрим по положительным
+            else
+            {
+                while (ch <= 0)
+                {
+                    ch += p;
+                    
+                }
+                ch -= p; // т.к если попадаем в 0 число, то делается еще 1 операция , например -5 по модулю 5
+            }
             return ch;
         }
 
-        private void SumPoint(double a, double b, int p, double x1, double y1, double x2, double y2)
+            private void SumPoint(double a, double b, int p, double x1, double y1, double x2, double y2)
         {
             double x3, y3;
             //1 условие
@@ -77,8 +88,8 @@ namespace elliptical_curves
                 {
                     PoModul(x2, p);
                     PoModul(y2, p);
+                    DrawGraph(x2,y2);
                     printX3Y3(x2, y2);
-
                     // Рисуем график добавить
                     return;
                 }
@@ -86,7 +97,9 @@ namespace elliptical_curves
                 {
                     PoModul(x1, p);
                     PoModul(y1, p);
+                    DrawGraph(x1, y1);
                     printX3Y3(x1, y1);
+
                     // Рисуем график добавить
                     return;
                 }
@@ -99,7 +112,7 @@ namespace elliptical_curves
                 y3 = (-y1 + ((y2 - y1) * ObratniiElement(x2 - x1, p))) * (x1 - x3);
                 x3= PoModul(x3, p);
                 y3= PoModul(y3, p);
-
+                DrawGraph(x3, y3);
                 printX3Y3(x3, y3);
             }
 
@@ -107,6 +120,7 @@ namespace elliptical_curves
             if(x1==x2&& y1 == y2 * (-1))
             {
                 x3 = 0; y3 = 0;
+                DrawGraph(x3, y3);
                 printX3Y3(x3, y3);
             }
 
@@ -116,7 +130,7 @@ namespace elliptical_curves
                 y3 = -y1 + ((3 * x1 * x1 + a) * ObratniiElement(2 * y1, p)) * (x1 - x3);
                 x3 = PoModul(x3, p);
                 y3 = PoModul(y3, p);
-                // по моему тут нужно по модулю считать дальше
+                DrawGraph(x3, y3);
                 printX3Y3(x3, y3);
             }
 
@@ -134,8 +148,40 @@ namespace elliptical_curves
             return -1;
         }
 
-        private void DrawGraph()
+        private void DrawGraph(double x1=0, double y1=0)
         {
+            // Считываем с формы требуемые значения
+
+            
+            double Xmin = -x1-5;
+
+            double Xmax = x1+5;
+
+            double Step = 1;
+
+            double[] x = new double[1];
+            double[] y = new double[1];
+            x[0] = x1;
+            y[0] = y1;
+
+
+
+            // Настраиваем оси графика
+
+            chart1.ChartAreas[0].AxisX.Minimum = Xmin;
+
+            chart1.ChartAreas[0].AxisX.Maximum = Xmax;
+
+            chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+
+            // Определяем шаг сетки
+
+            chart1.ChartAreas[0].AxisX.MajorGrid.Interval = Step;
+            // добавляем точку
+            chart1.Series[0].Points.DataBindXY(x, y);
+
+
 
         }
 
