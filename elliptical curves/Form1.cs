@@ -59,7 +59,7 @@ namespace elliptical_curves
         private double PoModul(double ch, int p)
         {
 
-            while (ch > 0)
+            while (ch >= 0)
             {
                 ch -= p;
             }
@@ -75,12 +75,17 @@ namespace elliptical_curves
             {
                 if(x1==0 && y1 == 0)
                 {
+                    PoModul(x2, p);
+                    PoModul(y2, p);
                     printX3Y3(x2, y2);
+
                     // Рисуем график добавить
                     return;
                 }
                 else
                 {
+                    PoModul(x1, p);
+                    PoModul(y1, p);
                     printX3Y3(x1, y1);
                     // Рисуем график добавить
                     return;
@@ -121,12 +126,17 @@ namespace elliptical_curves
         {
             double obratn; // братный элемент
             // спросить, включаем мы тут p или нет 
-            for(int i=1; i<=p; i++)
+            for (int i = 1; i <= p; i++)
             {
                 obratn = PoModul(ch, p);
                 if (obratn == 1) return i;
             }
             return -1;
+        }
+
+        private void DrawGraph()
+        {
+
         }
 
         private void printX3Y3(double x3, double y3)
