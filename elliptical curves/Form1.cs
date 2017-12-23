@@ -15,30 +15,37 @@ namespace elliptical_curves
         public Form1()
         {
             InitializeComponent();
+            textBox10.ReadOnly = true; // запрещаю изменять p в textbox
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             double a, b; int p;  double x1, x2, y1, y2;
-            a = Convert.ToDouble(textBox1.Text);
-            b = Convert.ToDouble(textBox2.Text);
-            p = Convert.ToInt32(textBox9.Text);
-            x1 = Convert.ToDouble(textBox3.Text);
-            x2 = Convert.ToDouble(textBox5.Text);
-            y1 = Convert.ToDouble(textBox4.Text);
-            y2= Convert.ToDouble(textBox6.Text);
-
-
-            if (p > 3)
+            try
             {
-                Number7(a, b, p, x1, y1, x2, y2);
+                a = Convert.ToDouble(textBox1.Text);
+                b = Convert.ToDouble(textBox2.Text);
+                p = Convert.ToInt32(textBox9.Text);
+                x1 = Convert.ToDouble(textBox3.Text);
+                x2 = Convert.ToDouble(textBox5.Text);
+                y1 = Convert.ToDouble(textBox4.Text);
+                y2 = Convert.ToDouble(textBox6.Text);
             }
-            if (p == 2)
+            catch (Exception ex)
             {
-
+                MessageBox.Show("Вы не заполнили все поля, либо заполнили некорректно! Попробуйте снова! ");
+                return;
             }
+            
 
-          
+            if (p < 3)
+            {
+                MessageBox.Show("Неправильно задано p! Попробуйте снова!");
+                return;
+            }
+            else Number7(a, b, p, x1, y1, x2, y2);
+            
         }
 
         private void Number7(double a, double b, int p, double x1, double y1, double x2, double y2)
@@ -52,6 +59,28 @@ namespace elliptical_curves
                 MessageBox.Show("Одна или обе точки не принадлежат этой кривой");
             }
         }
+
+        private void Number8(double a, double b, int p, double x1, double y1, double x2, double y2)
+        {
+
+            //TypeCurv(a, b, p, x1, y1);
+            //if ( && utensilsLineCurve8(a, b, p, x2, y2))
+            //{
+            //    SumPoint(a, b, p, x1, y1, x2, y2);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Одна или обе точки не принадлежат этой кривой");
+            //}
+        }
+
+        //private int TypeCurv(double a, double b, int p, double x1, double y1, double x2, double y2)
+        //{
+
+        //    if()
+
+        //}
+   
 
         private bool utensilsLineCurve7(double a, double b, int p, double x, double y)
         {
@@ -68,6 +97,34 @@ namespace elliptical_curves
             }
             return false;
            
+        }
+
+
+        private int TypeCurv(double a, double b, int p, double x, double y)
+        {
+    
+            double l, pr;
+            l = x * x * x + a * x + b; // просто посчитали без модуля
+            pr = y * y+a*y;
+            l = PoModul(l, 2); // посчитали по модулю
+            pr = PoModul(pr, 2);
+             
+            
+            if (pr == l) // сравнили уже по вычисленному модулю
+            {
+                return 1; // сингулярная
+            }
+            else
+            {
+                l = x * x * x + a * x + b; // просто посчитали без модуля
+                pr = y * y + a * y;
+                l = PoModul(l, 2); // посчитали по модулю
+                pr = PoModul(pr, 2);
+            }
+
+            
+            return 2;
+
         }
 
         private double PoModul(double ch, int p)
@@ -171,9 +228,9 @@ namespace elliptical_curves
             // Считываем с формы требуемые значения
 
             
-            double Xmin = -x1-5;
+            double Xmin = x1-5;
 
-            double Xmax = x1+5;
+            double Xmax = x1;
 
             double Step = 1;
 
@@ -208,5 +265,21 @@ namespace elliptical_curves
             textBox7.Text = Convert.ToString(x3);
             textBox8.Text = Convert.ToString(y3);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            double a, b; int p; double x1, x2, y1, y2;
+            a = Convert.ToDouble(textBox12.Text);
+            b = Convert.ToDouble(textBox11.Text);
+            p = Convert.ToInt32(textBox10.Text);
+            x1 = Convert.ToDouble(textBox16.Text);
+            x2 = Convert.ToDouble(textBox14.Text);
+            y1 = Convert.ToDouble(textBox15.Text);
+            y2 = Convert.ToDouble(textBox13.Text);
+
+            Number8(a, b, p, x1, y1, x2, y2);
+        }
+
+
     }
 }
