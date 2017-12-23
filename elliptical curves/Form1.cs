@@ -79,7 +79,7 @@ namespace elliptical_curves
 
             if (utensilsLineCurve8NoSingular(a, b, c, p, x1, y1) && utensilsLineCurve8NoSingular(a, b, c, p, x2, y2))
             {
-
+                SumPointNoSingular(a, b, c, p, x1, y1, x2, y2);
             }
 
         }
@@ -132,8 +132,8 @@ namespace elliptical_curves
         {
 
             double l, pr;
-            l = x * x * x + a * x + b; // просто посчитали без модуля
-            pr = y * y + a * y;
+            l = x * x * x + b * x*x + c; // просто посчитали без модуля
+            pr = y * y + a * x*y;
             l = PoModul(l, p); // посчитали по модулю
             pr = PoModul(pr, p);
 
@@ -240,7 +240,7 @@ namespace elliptical_curves
                     PoModul(x2, p);
                     PoModul(y2, p);
                     DrawGraph8(x2, y2);
-                    printX3Y3Singular(x2, y2);
+                    printX3Y3SingularAndNoSingular(x2, y2);
                     // Рисуем график добавить
                     return;
                 }
@@ -249,7 +249,7 @@ namespace elliptical_curves
                     PoModul(x1, p);
                     PoModul(y1, p);
                     DrawGraph8(x1, y1);
-                    printX3Y3Singular(x1, y1);
+                    printX3Y3SingularAndNoSingular(x1, y1);
 
                     // Рисуем график добавить
                     return;
@@ -264,7 +264,7 @@ namespace elliptical_curves
                 x3 = PoModul(x3, p);
                 y3 = PoModul(y3, p);
                 DrawGraph8(x3, y3);
-                printX3Y3Singular(x3, y3);
+                printX3Y3SingularAndNoSingular(x3, y3);
             }
 
             // 4 условие
@@ -272,7 +272,7 @@ namespace elliptical_curves
             {
                 x3 = 0; y3 = 0;
                 DrawGraph8(x3, y3);
-                printX3Y3Singular(x3, y3);
+                printX3Y3SingularAndNoSingular(x3, y3);
             }
 
             if (x1 == x2 && y1 == y2)
@@ -282,7 +282,65 @@ namespace elliptical_curves
                 x3 = PoModul(x3, p);
                 y3 = PoModul(y3, p);
                 DrawGraph8(x3, y3);
-                printX3Y3Singular(x3, y3);
+                printX3Y3SingularAndNoSingular(x3, y3);
+            }
+
+        }
+
+        private void SumPointNoSingular(double a, double b, double c, int p, double x1, double y1, double x2, double y2)
+        {
+            double x3, y3;
+            //1 условие
+            if ((x1 == 0 && y1 == 0) || (x2 == 0 && y2 == 0))
+            {
+                if (x1 == 0 && y1 == 0)
+                {
+                    PoModul(x2, p);
+                    PoModul(y2, p);
+                    DrawGraph8(x2, y2);
+                    printX3Y3SingularAndNoSingular(x2, y2);
+                    // Рисуем график добавить
+                    return;
+                }
+                else
+                {
+                    PoModul(x1, p);
+                    PoModul(y1, p);
+                    DrawGraph8(x1, y1);
+                    printX3Y3SingularAndNoSingular(x1, y1);
+
+                    // Рисуем график добавить
+                    return;
+                }
+            }
+            // 3 условие
+            if (x1 != x2)
+            {
+                // Вычесть по модулю???
+                x3 = Math.Pow((y2 + y1) * ObratniiElement(x2 + x1, p), 2)+ (y2 + y1) * ObratniiElement(x2 + x1, p) + x1 + x2+b;
+                y3 = (x3 + y1 + ((y2 + y1) * ObratniiElement(x2 + x1, p))) * (x1 + x3);
+                x3 = PoModul(x3, p);
+                y3 = PoModul(y3, p);
+                DrawGraph8(x3, y3);
+                printX3Y3SingularAndNoSingular(x3, y3);
+            }
+
+            // 4 условие
+            if (x1 == x2 && y1 == y2 * (-1))
+            {
+                x3 = 0; y3 = 0;
+                DrawGraph8(x3, y3);
+                printX3Y3SingularAndNoSingular(x3, y3);
+            }
+
+            if (x1 == x2 && y1 == y2)
+            {
+                x3 = (x1 * x1)+(y1*y1) * ObratniiElement(x1*x1, p)+x1+y1* ObratniiElement(x1, p)+b;
+                y3 = (x1 * x1)+(x1*x1+y1) * ObratniiElement(x1, p) * x3+x3;
+                x3 = PoModul(x3, p);
+                y3 = PoModul(y3, p);
+                DrawGraph8(x3, y3);
+                printX3Y3SingularAndNoSingular(x3, y3);
             }
 
         }
@@ -384,7 +442,7 @@ namespace elliptical_curves
             textBox8.Text = Convert.ToString(y3);
         }
 
-        private void printX3Y3Singular(double x3, double y3)
+        private void printX3Y3SingularAndNoSingular(double x3, double y3)
         {
             textBox18.Text = Convert.ToString(x3);
             textBox17.Text = Convert.ToString(y3);
